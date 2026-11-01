@@ -196,18 +196,31 @@
     .soc-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
     .soc-live{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font:600 12px/1 "JetBrains Mono",monospace}
     .soc-live:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px var(--accent-soft);animation:pulse 2s infinite}
-    .soc-canvas{display:block;width:100%;height:520px;background:radial-gradient(ellipse at 50% 40%,#0d2433 0%,#050d12 62%)}
-    .soc-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+    .soc-canvas{display:block;width:100%;height:680px;background:radial-gradient(ellipse at 50% 40%,#0d2433 0%,#050d12 62%)}
+    .soc-stats{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line)}
     .soc-stat{padding:16px 20px;border-right:1px solid var(--line)}
     .soc-stat:last-child{border-right:0}
     .soc-stat strong{display:block;font-size:24px;color:var(--accent);font-family:"JetBrains Mono",monospace}
     .soc-stat span{color:var(--muted);font-size:12px}
     .soc-tools{display:flex;flex-wrap:wrap;gap:8px;padding:18px 20px;border-top:1px solid var(--line)}
     .soc-tool{font:500 11px/1 "JetBrains Mono",monospace;border:1px solid var(--line);color:var(--muted);padding:8px 10px;border-radius:999px}
-    .soc-tool.now{color:var(--accent);border-color:rgba(0,231,129,.5)}
-    .soc-tool.next{color:#ffd166;border-color:rgba(255,209,102,.4)}
-    @media(max-width:900px){.soc-canvas{height:420px}.soc-stats{grid-template-columns:1fr 1fr}.soc-stat:nth-child(2){border-right:0}}
-    @media(max-width:620px){.soc-canvas{height:360px}.soc-stats{grid-template-columns:1fr 1fr}}
+    @media(max-width:900px){.soc-canvas{height:540px}.soc-stats{grid-template-columns:1fr 1fr}.soc-stat:nth-child(2){border-right:0}}
+    @media(max-width:620px){.soc-canvas{height:460px}.soc-stats{grid-template-columns:1fr 1fr}}
+
+    .soc-panels{display:grid;grid-template-columns:1fr 1fr 1.4fr;border-top:1px solid var(--line)}
+    .soc-panel{padding:18px 20px;border-right:1px solid var(--line);min-width:0}
+    .soc-panel:last-child{border-right:0}
+    .soc-panel h4{margin:0 0 12px;font-size:13px;letter-spacing:.04em;color:var(--accent);font-family:"JetBrains Mono",monospace}
+    .soc-panel p{margin:10px 0 0;color:var(--muted);font-size:12px}
+    .soc-chain{display:flex;flex-wrap:wrap;gap:6px}
+    .soc-chain span{font:500 10px/1 "JetBrains Mono",monospace;border:1px solid var(--line);color:var(--muted);padding:6px 8px;border-radius:999px}
+    .soc-chain span.active{color:#041009;background:var(--accent);border-color:var(--accent)}
+    .soc-mitre{font:600 13px/1.4 "JetBrains Mono",monospace;color:#ff6b6b}
+    .soc-logfeed{height:168px;overflow:hidden;background:#02090d;border:1px solid var(--line);border-radius:10px;padding:12px;font:500 11px/1.7 "JetBrains Mono",monospace;color:#b8cabf}
+    .soc-logfeed div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .soc-logfeed .log-block{color:#ff6b6b}
+    .soc-logfeed .log-ok{color:var(--accent)}
+    @media(max-width:900px){.soc-panels{grid-template-columns:1fr}.soc-panel{border-right:0;border-bottom:1px solid var(--line)}.soc-panel:last-child{border-bottom:0}}
   </style>
 </head>
 <body>
@@ -257,11 +270,15 @@
         <div class="soc-stat"><strong id="soc-scanned">0</strong><span>Packets scanned</span></div>
         <div class="soc-stat"><strong id="soc-blocked">0</strong><span>Threats blocked</span></div>
         <div class="soc-stat"><strong id="soc-allowed">0</strong><span>Legitimate packets passed</span></div>
-        <div class="soc-stat"><strong>12</strong><span>Security tools in orbit</span></div>
+        <div class="soc-stat"><strong id="soc-queries">0</strong><span>Total queries run</span></div><div class="soc-stat"><strong>12</strong><span>Security tools in orbit</span></div>
+      </div>
+      <div class="soc-panels">
+        <div class="soc-panel"><h4>Cyber Kill Chain</h4><div id="soc-killchain" class="soc-chain"><span>Reconnaissance</span><span>Weaponization</span><span>Delivery</span><span>Exploitation</span><span>Installation</span><span>Command &amp; Control</span><span>Actions on Objectives</span></div><p id="soc-chain-note">Current stage: Reconnaissance</p></div>
+        <div class="soc-panel"><h4>MITRE ATT&amp;CK Mapping</h4><div id="soc-mitre" class="soc-mitre">T1110 - Brute Force</div><p id="soc-mitre-detail">Latest detection mapped to MITRE ATT&amp;CK.</p></div>
+        <div class="soc-panel"><h4>Live Logs</h4><div id="soc-logfeed" class="soc-logfeed"></div></div>
       </div>
       <div class="soc-tools">
-        <span class="soc-tool now">Learning now: Splunk</span><span class="soc-tool now">Wireshark</span><span class="soc-tool now">Burp Suite</span><span class="soc-tool now">Nmap</span><span class="soc-tool now">Kali Linux</span><span class="soc-tool now">Python</span>
-        <span class="soc-tool next">Next: Sentinel</span><span class="soc-tool next">Defender XDR</span><span class="soc-tool next">ELK Stack</span><span class="soc-tool next">Metasploit</span><span class="soc-tool next">Cisco Networking</span><span class="soc-tool next">Fortinet</span>
+        <span class="soc-tool">Splunk</span><span class="soc-tool">Wireshark</span><span class="soc-tool">Burp Suite</span><span class="soc-tool">Nmap</span><span class="soc-tool">Kali Linux</span><span class="soc-tool">Python</span><span class="soc-tool">Sentinel</span><span class="soc-tool">Defender XDR</span><span class="soc-tool">ELK Stack</span><span class="soc-tool">Metasploit</span><span class="soc-tool">Cisco Networking</span><span class="soc-tool">Fortinet</span>
       </div>
     </div>
   </div></section>
@@ -587,6 +604,68 @@
   document.addEventListener('visibilitychange',function(){if(document.hidden)stop(); else start();});
   window.addEventListener('resize',function(){resize(); if(reduced) draw();});
   resize(); for(var s=0;s<6;s++) spawn(); start();
+})();
+</script>
+
+<script>
+(function(){
+  var logEl=document.getElementById('soc-logfeed');
+  var queriesEl=document.getElementById('soc-queries');
+  var blockedEl=document.getElementById('soc-blocked');
+  var mitreEl=document.getElementById('soc-mitre');
+  var mitreDetail=document.getElementById('soc-mitre-detail');
+  var chainEl=document.getElementById('soc-killchain');
+  var chainNote=document.getElementById('soc-chain-note');
+  if(!logEl||!queriesEl) return;
+  var queries=0, lastBlocked=blockedEl?blockedEl.textContent:'0';
+  var techniques=[
+    ['T1110','Brute Force','Repeated failed logons from one source IP'],
+    ['T1078','Valid Accounts','Login with a compromised account outside normal hours'],
+    ['T1059.001','PowerShell','Encoded PowerShell with a download command'],
+    ['T1566.001','Spearphishing Attachment','Malicious attachment opened by a user'],
+    ['T1021.001','Remote Desktop Protocol','RDP login from an unusual external IP'],
+    ['T1041','Exfiltration Over C2','Large outbound transfer to an unknown destination']
+  ];
+  var queriesText=[
+    'index=security EventCode=4625 | stats count by src_ip',
+    'index=firewall action=deny | stats count by dest_port',
+    'process.name=powershell.exe | search command_line=*EncodedCommand*',
+    'index=proxy url=*wp-login* | stats count by src_ip',
+    'EventCode=4688 | search New_Process_Name=*mimikatz*',
+    'index=dns query=* | stats count by query'
+  ];
+  var stages=['Reconnaissance','Weaponization','Delivery','Exploitation','Installation','Command & Control','Actions on Objectives'];
+  var stageIdx=0, techIdx=0, qIdx=0;
+  function timeNow(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2);}
+  function addLog(text, cls){
+    var div=document.createElement('div'); if(cls) div.className=cls; div.textContent='['+timeNow()+'] '+text;
+    logEl.appendChild(div); while(logEl.children.length>9) logEl.removeChild(logEl.firstChild);
+  }
+  function runQuery(text){
+    queries++; queriesEl.textContent=queries;
+    addLog('QUERY RUN: '+text, 'log-ok');
+  }
+  function setTechnique(i){
+    techIdx=i; var t=techniques[i];
+    if(mitreEl) mitreEl.textContent=t[0]+' - '+t[1];
+    if(mitreDetail) mitreDetail.textContent=t[2]+'.';
+  }
+  function setStage(i){
+    stageIdx=i;
+    if(chainEl){var spans=chainEl.querySelectorAll('span'); spans.forEach(function(s,idx){s.classList.toggle('active', idx===i);});}
+    if(chainNote) chainNote.textContent='Current stage: '+stages[i];
+  }
+  addLog('SOC SIMULATION STARTED: Splunk, Wireshark and firewall feeds connected.');
+  setTechnique(0); setStage(0);
+  setInterval(function(){
+    runQuery(queriesText[qIdx % queriesText.length]); qIdx++;
+    if(blockedEl && blockedEl.textContent!==lastBlocked){
+      lastBlocked=blockedEl.textContent;
+      var t=techniques[(techIdx+1)%techniques.length]; setTechnique((techIdx+1)%techniques.length);
+      addLog('BLOCKED: malicious packet stopped at firewall | MITRE '+t[0]+' '+t[1], 'log-block');
+    }
+    if(queries % 4 === 0){ setStage((stageIdx+1)%stages.length); }
+  }, 1600);
 })();
 </script>
 </body>
