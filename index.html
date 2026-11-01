@@ -221,6 +221,14 @@
     .soc-logfeed .log-block{color:#ff6b6b}
     .soc-logfeed .log-ok{color:var(--accent)}
     @media(max-width:900px){.soc-panels{grid-template-columns:1fr}.soc-panel{border-right:0;border-bottom:1px solid var(--line)}.soc-panel:last-child{border-bottom:0}}
+
+    .soc-ai{padding:18px 20px;border-top:1px solid var(--line);background:rgba(94,234,212,.04)}
+    .soc-ai h4{margin:0 0 12px;font-size:13px;letter-spacing:.04em;color:var(--accent);font-family:"JetBrains Mono",monospace}
+    .soc-ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .soc-ai-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:#050d12}
+    .soc-ai-card strong{display:block;font-size:13px;margin-bottom:6px}
+    .soc-ai-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+    @media(max-width:900px){.soc-ai-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -277,6 +285,11 @@
         <div class="soc-panel"><h4>MITRE ATT&amp;CK Mapping</h4><div id="soc-mitre" class="soc-mitre">T1110 - Brute Force</div><p id="soc-mitre-detail">Latest detection mapped to MITRE ATT&amp;CK.</p></div>
         <div class="soc-panel"><h4>Live Logs</h4><div id="soc-logfeed" class="soc-logfeed"></div></div>
       </div>
+      <div class="soc-ai"><h4>AI in the SOC</h4><div class="soc-ai-grid">
+        <div class="soc-ai-card"><strong>AI Triage</strong><p>AI scores incoming alerts and surfaces the highest-risk ones first, so the analyst starts with what matters most.</p></div>
+        <div class="soc-ai-card"><strong>AI Draft, Human Verifies</strong><p>AI drafts the incident summary, but no action is taken on the draft alone. The analyst verifies the evidence before deciding.</p></div>
+        <div class="soc-ai-card"><strong>LLM Security</strong><p>AI systems themselves are defended too: prompt injection, RAG poisoning and supply-chain risks, with guardrails and provenance checks.</p></div>
+      </div></div>
       <div class="soc-tools">
         <span class="soc-tool">Splunk</span><span class="soc-tool">Wireshark</span><span class="soc-tool">Burp Suite</span><span class="soc-tool">Nmap</span><span class="soc-tool">Kali Linux</span><span class="soc-tool">Python</span><span class="soc-tool">Sentinel</span><span class="soc-tool">Defender XDR</span><span class="soc-tool">ELK Stack</span><span class="soc-tool">Metasploit</span><span class="soc-tool">Cisco Networking</span><span class="soc-tool">Fortinet</span>
       </div>
@@ -538,6 +551,9 @@
     ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(core.x,core.y,42,0,Math.PI*2); ctx.fill();
     ctx.fillStyle='#041009'; ctx.font='700 11px "JetBrains Mono",monospace'; ctx.textAlign='center';
     ctx.fillText('SOC', core.x, core.y-3); ctx.fillText('CORE', core.x, core.y+11);
+    var aiX=core.x+Math.cos(angle*2)*58, aiY=core.y+Math.sin(angle*2)*58;
+    ctx.fillStyle='#a78bfa'; ctx.beginPath(); ctx.arc(aiX,aiY,10,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#041009'; ctx.font='700 9px "JetBrains Mono",monospace'; ctx.fillText('AI', aiX, aiY+3);
     // firewall ring
     ctx.strokeStyle='rgba(255,209,102,0.7)'; ctx.lineWidth=2;
     ctx.beginPath(); ctx.arc(core.x,core.y,86,0,Math.PI*2); ctx.stroke();
@@ -659,6 +675,8 @@
   setTechnique(0); setStage(0);
   setInterval(function(){
     runQuery(queriesText[qIdx % queriesText.length]); qIdx++;
+    if(qIdx % 2 === 0){ addLog('AI TRIAGE: anomaly scored high, routed for human verification.', 'log-ok'); }
+    if(qIdx % 3 === 0){ addLog('AI DRAFT: incident summary drafted, awaiting analyst verification.', 'log-ok'); }
     if(blockedEl && blockedEl.textContent!==lastBlocked){
       lastBlocked=blockedEl.textContent;
       var t=techniques[(techIdx+1)%techniques.length]; setTechnique((techIdx+1)%techniques.length);
