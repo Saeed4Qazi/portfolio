@@ -198,6 +198,16 @@
     .soc-live:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px var(--accent-soft);animation:pulse 2s infinite}
     .soc-canvas{display:block;width:100%;height:680px;background:radial-gradient(ellipse at 50% 40%,#0d2433 0%,#050d12 62%)}
     .soc-stats{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line)}
+
+.role-panels{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:18px 20px;border-top:1px solid var(--line);background:#04090e}
+.role-panel{border:1px solid var(--line);border-radius:12px;padding:14px;background:#050d12;min-width:0}
+.role-panel h4{margin:0 0 6px;font-size:13px;letter-spacing:.04em;font-family:"JetBrains Mono",monospace}
+.role-panel p{margin:0 0 10px;color:var(--muted);font-size:12px;line-height:1.5}
+.role-panel canvas{display:block;width:100%;height:140px;border-radius:8px;background:#02090d}
+.role-attack h4{color:#ff6b6b}.role-scan h4{color:#5eead4}.role-detect h4{color:#00ff88}.role-report h4{color:#a5b4fc}
+@media(max-width:900px){.role-panels{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.role-panels{grid-template-columns:1fr}}
+
     .soc-stat{padding:16px 20px;border-right:1px solid var(--line)}
     .soc-stat:last-child{border-right:0}
     .soc-stat strong{display:block;font-size:24px;color:var(--accent);font-family:"JetBrains Mono",monospace}
@@ -282,7 +292,13 @@ body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),tra
         <span class="soc-live">LIVE DETECTION</span>
       </div>
       <canvas id="soc-canvas" class="soc-canvas" aria-label="3D cybersecurity animation showing malicious packets being detected and blocked"></canvas>
-      <div class="soc-stats">
+      <div class="role-panels">
+<div class="role-panel role-attack"><h4>1. ATTACKING</h4><p>Burp Suite, Kali Linux, Metasploit only. Red threats move toward the shield and are blocked.</p><canvas id="role-attack" width="300" height="140" aria-label="Attacking animation"></canvas></div>
+<div class="role-panel role-scan"><h4>2. SCANNING</h4><p>Nmap, Wireshark only. Teal scan rings sweep across the network.</p><canvas id="role-scan" width="300" height="140" aria-label="Scanning animation"></canvas></div>
+<div class="role-panel role-detect"><h4>3. DETECTION</h4><p>Splunk, Sentinel, ELK Stack, Defender XDR only. Green pulses flash on each detection.</p><canvas id="role-detect" width="300" height="140" aria-label="Detection animation"></canvas></div>
+<div class="role-panel role-report"><h4>4. REPORTING</h4><p>Splunk, Sentinel, ELK Stack only. Incident reports are written, one by one.</p><canvas id="role-report" width="300" height="140" aria-label="Reporting animation"></canvas></div>
+</div>
+<div class="soc-stats">
         <div class="soc-stat"><strong id="soc-scanned">0</strong><span>Packets scanned</span></div>
         <div class="soc-stat"><strong id="soc-blocked">0</strong><span>Threats blocked</span></div>
         <div class="soc-stat"><strong id="soc-allowed">0</strong><span>Legitimate packets passed</span></div>
@@ -714,6 +730,52 @@ body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),tra
     }
     if(queries % 4 === 0){ setStage((stageIdx+1)%stages.length); }
   }, 1600);
+})();
+</script>
+
+<script>
+(function(){
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setup(id, draw){
+    var c=document.getElementById(id); if(!c) return;
+    var ctx=c.getContext('2d');
+    function frame(t){ ctx.clearRect(0,0,c.width,c.height); draw(ctx, c, t); if(!reduced) requestAnimationFrame(frame); }
+    if(reduced){ frame(0); } else { requestAnimationFrame(frame); }
+  }
+  // Attacking: red skull dots travel left to right, stop at shield
+  setup('role-attack', function(ctx,c,t){
+    var x=(t/12)%(c.width+40)-20;
+    ctx.fillStyle='#ff3b3b'; ctx.font='20px sans-serif'; ctx.fillText('\u{1F480}', x, 70);
+    ctx.fillStyle='#ff6b6b'; ctx.font='12px monospace'; ctx.fillText('Burp  Kali  Metasploit', 10, 20);
+    ctx.strokeStyle='#ff3b3b'; ctx.strokeRect(c.width-70, 40, 50, 60); ctx.fillStyle='#fff'; ctx.font='11px monospace'; ctx.fillText('SHIELD', c.width-66, 72);
+    if(x>c.width-90){ ctx.fillStyle='#ff3b3b'; ctx.font='bold 13px monospace'; ctx.fillText('BLOCKED', c.width-130, 125); }
+  });
+  // Scanning: expanding teal rings
+  setup('role-scan', function(ctx,c,t){
+    var r=(t/8)%80;
+    ctx.strokeStyle='rgba(94,234,212,0.9)'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(150,70,r,0,Math.PI*2); ctx.stroke();
+    ctx.strokeStyle='rgba(94,234,212,0.4)'; ctx.beginPath(); ctx.arc(150,70,(r+40)%80,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle='#5eead4'; ctx.font='12px monospace'; ctx.fillText('Nmap  Wireshark', 10, 20);
+    ctx.fillStyle='#5eead4'; ctx.beginPath(); ctx.arc(150,70,4,0,Math.PI*2); ctx.fill();
+  });
+  // Detection: green pulses flashing in turn
+  setup('role-detect', function(ctx,c,t){
+    var tools=['Splunk','Sentinel','ELK','Defender'];
+    tools.forEach(function(name,i){
+      var on=Math.floor(t/400+i)%4===0;
+      ctx.fillStyle=on?'#00ff88':'#1d3a2a'; ctx.beginPath(); ctx.arc(40+i*70,70,18,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle=on?'#041009':'#b8cabf'; ctx.font='10px monospace'; ctx.fillText(name, 40+i*70-18, 105);
+    });
+    ctx.fillStyle='#00ff88'; ctx.font='12px monospace'; ctx.fillText('ALERT DETECTED', 10, 20);
+  });
+  // Reporting: report lines typing in
+  setup('role-report', function(ctx,c,t){
+    var lines=['Incident: blocked threat','MITRE: T1110 Brute Force','Action: blocked, logged','Status: reported'];
+    var n=Math.min(lines.length, Math.floor(t/900)%(lines.length+1));
+    ctx.fillStyle='#a5b4fc'; ctx.font='12px monospace'; ctx.fillText('Splunk  Sentinel  ELK', 10, 20);
+    ctx.fillStyle='#e5e7eb'; ctx.font='11px monospace';
+    lines.slice(0,n).forEach(function(l,i){ ctx.fillText(l, 10, 50+i*24); });
+  });
 })();
 </script>
 </body>
