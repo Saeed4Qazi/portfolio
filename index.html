@@ -494,10 +494,10 @@
   var ctx=canvas.getContext('2d');
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var tools=[
-    {name:'Splunk',now:true},{name:'Wireshark',now:true},{name:'Burp Suite',now:true},
-    {name:'Nmap',now:true},{name:'Kali Linux',now:true},{name:'Python',now:true},
-    {name:'Sentinel',now:false},{name:'Defender XDR',now:false},{name:'ELK Stack',now:false},
-    {name:'Metasploit',now:false},{name:'Cisco',now:false},{name:'Fortinet',now:false}
+    {name:'Splunk',icon:'🔍',now:true},{name:'Wireshark',icon:'🦈',now:true},{name:'Burp Suite',icon:'🐛',now:true},
+    {name:'Nmap',icon:'🗺',now:true},{name:'Kali Linux',icon:'🐉',now:true},{name:'Python',icon:'🐍',now:true},
+    {name:'Sentinel',icon:'👁',now:false},{name:'Defender XDR',icon:'🛡',now:false},{name:'ELK Stack',icon:'📊',now:false},
+    {name:'Metasploit',icon:'💥',now:false},{name:'Cisco',icon:'🌐',now:false},{name:'Fortinet',icon:'🔥',now:false}
   ];
   var scanned=0, blocked=0, allowed=0, angle=0, tilt=0.32, targetTilt=0.32, raf=0, running=false, visible=true;
   var scannedEl=document.getElementById('soc-scanned');
@@ -562,10 +562,15 @@
     // tool nodes
     nodes.forEach(function(n){
       var p=project(n.x,n.y,n.z);
-      ctx.fillStyle=n.tool.now?'#00ff88':'#ffd166';
-      ctx.beginPath(); ctx.arc(p.x,p.y,5*p.s+2,0,Math.PI*2); ctx.fill();
+      var br=13*p.s+4;
+      ctx.fillStyle='#041009';
+      ctx.beginPath(); ctx.arc(p.x,p.y,br,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle=n.tool.now?'#00ff88':'#ffd166'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(p.x,p.y,br,0,Math.PI*2); ctx.stroke();
+      ctx.fillStyle='#ffffff'; ctx.font=(Math.round(br*1.15))+'px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(n.tool.icon||'', p.x, p.y+br*0.4);
       ctx.fillStyle='rgba(239,248,243,0.92)'; ctx.font='600 11px "JetBrains Mono",monospace';
-      ctx.fillText(n.tool.name, p.x, p.y-14);
+      ctx.fillText(n.tool.name, p.x, p.y-br-5);
     });
     // packets: attacker traffic comes from outside, travels to firewall, then core
     packets.forEach(function(pk){
@@ -581,8 +586,8 @@
       pk.trail.push({x:x,y:y}); if(pk.trail.length>7) pk.trail.shift();
       ctx.strokeStyle=pk.malicious?'rgba(255,77,77,0.5)':'rgba(0,255,136,0.5)'; ctx.lineWidth=2;
       ctx.beginPath(); pk.trail.forEach(function(pt,idx){if(idx===0)ctx.moveTo(pt.x,pt.y); else ctx.lineTo(pt.x,pt.y);}); ctx.stroke();
-      ctx.fillStyle=pk.malicious?'#ff4d4d':'#00ff88';
-      ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill();
+      ctx.font='16px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(pk.malicious?'\uD83D\uDC80':'\uD83D\uDC64', x, y+6);
       if(pk.t>=0.6 && !pk.checked){
         pk.checked=true; scanned++;
         if(pk.malicious){blocked++; flashes.push({x:fx,y:fy,text:'BLOCKED',t:0});}
