@@ -15,15 +15,15 @@
   <style>
     :root {
       color-scheme: light dark;
-      --bg:#0a0e1a; --bg-alt:#0c1220; --surface:#111a2a; --surface-2:#172235;
-      --text:#eef2f6; --muted:#9aa7b4; --line:#263242; --accent:#5eead4; --accent-2:#99f6e4;
+      --bg:#05080f; --bg-alt:#0c1220; --surface:#111a2a; --surface-2:#172235;
+      --text:#eef2f6; --muted:#9aa7b4; --line:#263242; --accent:#00ff88; --accent-2:#99f6e4;
       --accent-soft:rgba(94,234,212,.08); --nav:rgba(10,14,26,.94); --shadow:0 10px 28px rgba(0,0,0,.22);
       --max:1180px; --radius:18px;
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --bg:#080c14; --bg-alt:#0b111d; --surface:#101827; --surface-2:#141f30;
-        --text:#eef2f6; --muted:#9aa7b4; --line:#263242; --accent:#5eead4; --accent-2:#99f6e4;
+        --text:#eef2f6; --muted:#9aa7b4; --line:#263242; --accent:#00ff88; --accent-2:#99f6e4;
         --accent-soft:rgba(94,234,212,.08); --nav:rgba(8,12,20,.94); --shadow:0 10px 28px rgba(0,0,0,.22);
       }
     }
@@ -232,6 +232,11 @@
   
 .cert:hover,.project:hover,.interest-card:hover,.timeline-card:hover{transform:translateY(-4px);border-color:rgba(0,231,129,.45);box-shadow:0 18px 40px rgba(0,231,129,.12);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
 .btn:hover{transform:translateY(-2px)}
+
+body{background:radial-gradient(1200px 600px at 80% -10%,rgba(0,255,136,.14),transparent 60%),radial-gradient(900px 500px at 10% 0%,rgba(94,234,212,.12),transparent 55%),#05080f}
+.hero{background:linear-gradient(180deg,rgba(0,255,136,.10),transparent 55%)}
+.cert,.project,.interest-card,.timeline-card,.skill-group{background:#0d1526;border:1px solid #1e3a2f;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.section-head h2{letter-spacing:-.5px}
 </style>
 </head>
 <body>
