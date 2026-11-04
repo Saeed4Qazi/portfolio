@@ -16,14 +16,14 @@
     :root {
       color-scheme: light dark;
       --bg:#05080f; --bg-alt:#0c1220; --surface:#111a2a; --surface-2:#172235;
-      --text:#eef2f6; --muted:#9aa7b4; --line:#263242; --accent:#ff3b3b; --accent-2:#99f6e4;
+      --text:#eef2f6; --muted:#9aa7b4; --line:#263242; --accent:#5eead4; --accent-2:#99f6e4;
       --accent-soft:rgba(94,234,212,.08); --nav:rgba(10,14,26,.94); --shadow:0 10px 28px rgba(0,0,0,.22);
       --max:1180px; --radius:18px;
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --bg:#080c14; --bg-alt:#0b111d; --surface:#101827; --surface-2:#141f30;
-        --text:#eef2f6; --muted:#9aa7b4; --line:#263242; --accent:#ff3b3b; --accent-2:#99f6e4;
+        --text:#eef2f6; --muted:#9aa7b4; --line:#263242; --accent:#5eead4; --accent-2:#99f6e4;
         --accent-soft:rgba(94,234,212,.08); --nav:rgba(8,12,20,.94); --shadow:0 10px 28px rgba(0,0,0,.22);
       }
     }
@@ -85,7 +85,7 @@
     .about-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:70px}
     .about-copy{font-size:18px;color:var(--muted)}
     .about-copy p{margin:0 0 18px}
-    .about-profile{float:left;width:112px;height:112px;margin:4px 24px 12px 0;padding:3px;border-radius:50%;background:var(--accent);box-shadow:0 0 24px rgba(255,59,59,.14)}
+    .about-profile{float:left;width:112px;height:112px;margin:4px 24px 12px 0;padding:3px;border-radius:50%;background:var(--accent);box-shadow:0 0 24px rgba(94,234,212,.14)}
     .about-profile img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 22%;border-radius:50%;border:3px solid var(--bg)}
     .principles{display:grid;gap:14px}
     .principle{padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:0 var(--radius) var(--radius) 0;position:relative}
@@ -230,12 +230,12 @@
     .soc-ai-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
     @media(max-width:900px){.soc-ai-grid{grid-template-columns:1fr}}
   
-.cert:hover,.project:hover,.interest-card:hover,.timeline-card:hover{transform:translateY(-4px);border-color:rgba(255,59,59,.45);box-shadow:0 18px 40px rgba(255,59,59,.14);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.cert:hover,.project:hover,.interest-card:hover,.timeline-card:hover{transform:translateY(-4px);border-color:rgba(94,234,212,.45);box-shadow:0 18px 40px rgba(94,234,212,.14);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
 .btn:hover{transform:translateY(-2px)}
 
 body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),transparent 60%),radial-gradient(900px 500px at 10% 0%,rgba(255,45,45,.08),transparent 55%),#05080f}
 .hero{background:linear-gradient(180deg,rgba(255,45,45,.12),transparent 55%)}
-.cert,.project,.interest-card,.timeline-card,.skill-group{background:#0d1526;border:1px solid #3a1e1e;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.cert,.project,.interest-card,.timeline-card,.skill-group{background:#0d1526;border:1px solid #263242;box-shadow:0 10px 30px rgba(0,0,0,.35)}
 .section-head h2{letter-spacing:-.5px}
 </style>
 </head>
@@ -392,24 +392,7 @@ body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),tra
     <div class="section-head reveal"><div class="section-no">CERTIFICATIONS</div><h2>Validated knowledge.</h2></div>
     <div class="cert-grid">
       <article class="cert featured reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg><h3>ISO/IEC 27701:2025 Lead Auditor</h3><p><strong>ISO/IEC 27701:2025</strong>Lead Auditor credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 12 7 22l5-3 5 3-1.5-10"/></svg><h3>COFPS</h3><p><strong>SECURITY CERTIFICATION</strong>Certified Online Fraud Prevention Specialist</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 12 7 22l5-3 5 3-1.5-10"/></svg><h3>CLLMSP</h3><p><strong>SECURITY CERTIFICATION</strong>Certified LLM Security Professional</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16v10H4z"/><path d="M8 7V4m8 3V4M8 12h8m-8 3h5"/></svg><h3>BGP Security</h3><p><strong>RIPE NCC</strong>Routing security credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><h3>IPv6 Fundamentals</h3><p><strong>RIPE NCC</strong>Internet protocol credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/><path d="M8 12h8M12 8v8"/></svg><h3>IPv6 Security</h3><p><strong>RIPE NCC</strong>Network security credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.5 19a4.5 4.5 0 1 1 .42-8.98 6 6 0 0 1 11.58 1.4A3.75 3.75 0 0 1 17.5 19h-11Z"/></svg><h3>OCI Architect Associate</h3><p><strong>ORACLE</strong>Cloud infrastructure credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.5 19a4.5 4.5 0 1 1 .42-8.98 6 6 0 0 1 11.58 1.4A3.75 3.75 0 0 1 17.5 19h-11Z"/></svg><h3>OCI Foundations Associate</h3><p><strong>ORACLE</strong>Cloud foundations credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 11 18-7-7 18-2.5-7.5L3 11Z"/></svg><h3>API Testing Path (v12)</h3><p><strong>POSTMAN</strong>API testing credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg><h3>Copado DevOps</h3><p><strong>COPADO</strong>Salesforce DevOps credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg><h3>Intro to AI Security</h3><p><strong>AISEC UNIVERSITY</strong>AI security credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg><h3>SQL (Advanced)</h3><p><strong>HACKERRANK</strong>Database skills credential</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg><h3>Fortinet NSE 1</h3><p><strong>FORTINET</strong>Cybersecurity and Cloud Fundamentals 1.0, October 2026</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg><h3>Fortinet NSE 2</h3><p><strong>FORTINET</strong>Introduction to the Next Generation Firewall 1.0, October 2026</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg><h3>Fortinet NSE 3</h3><p><strong>FORTINET</strong>FortiGate 7.6 Operator, October 2026</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg><h3>Foundations of Log Analysis for Cyber Defense</h3><p><strong>RED TEAM LEADERS</strong>Log analysis and SIEM investigation, November 2026</p></article>
-      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg><h3>Certified LLM Security Expert (CLLMSE)</h3><p><strong>RED TEAM LEADERS</strong>LLM security expert certification, November 2026</p></article>
-    </div>
-  </div><article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 12 7 22l5-3 5 3-1.5-10"/></svg><h3>Cyber Security Architecture v1</h3><p><strong>RED TEAM LEADERS</strong>Security architecture concepts, controls, and design principles.</p></article><article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 12 7 22l5-3 5 3-1.5-10"/></svg><h3>Introduction to Bug Bounty</h3><p><strong>RED TEAM LEADERS</strong>Bug bounty fundamentals, vulnerability classes, and responsible disclosure.</p></article><article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 12 7 22l5-3 5 3-1.5-10"/></svg><h3>Advanced OSINT Mastery</h3><p><strong>RED TEAM LEADERS</strong>Open-source intelligence concepts, collection, and defensive analysis.</p></article></section>
+      <article class="cert reveal"><svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><h3>Advanced OSINT Mastery</h3><p><strong>RED TEAM LEADERS</strong>Open-source intelligence concepts, collection, and defensive analysis.</p></article></section>
 
   <section id="achievements"><div class="container">
     <div class="section-head reveal"><div class="section-no">ACHIEVEMENTS</div><h2>Early proof, clear direction.</h2></div>
@@ -544,16 +527,22 @@ body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),tra
     var pool=malicious?offensive:defensive;
     var from=pool[Math.floor(Math.random()*pool.length)];
     packets.push({malicious:malicious, from:from, t:0, speed:0.004+Math.random()*0.003, trail:[]});
+    if(malicious) pulses.push({node:from, r:6, color:'rgba(255,59,59,0.9)'});
   }
   var pulses=[];
   function drawPulses(){
-    pulses=pulses.filter(function(pl){return pl.r<46;});
+    pulses=pulses.filter(function(pl){return pl.r<70;});
     pulses.forEach(function(pl){
       var n=nodes[pl.node]; if(!n) return;
-      var pp=project(n.x,n.y,n.z); pl.r+=0.9;
-      ctx.strokeStyle=pl.color; ctx.lineWidth=1.5;
+      var pp=project(n.x,n.y,n.z); pl.r+=1.4;
+      ctx.strokeStyle=pl.color; ctx.lineWidth=3;
       ctx.beginPath(); ctx.arc(pp.x,pp.y,pl.r,0,Math.PI*2); ctx.stroke();
     });
+    var sweep=angle*2;
+    ctx.strokeStyle='rgba(255,59,59,0.55)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(core.x,core.y); ctx.lineTo(core.x+Math.cos(sweep)*110, core.y+Math.sin(sweep)*110); ctx.stroke();
+    ctx.strokeStyle='rgba(255,59,59,0.25)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.arc(core.x,core.y,110,sweep-0.6,sweep); ctx.stroke();
   }
   function draw(){
     ctx.clearRect(0,0,W,H);
