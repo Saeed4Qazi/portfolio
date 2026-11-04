@@ -278,7 +278,7 @@ body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),tra
   <section class="soc-sim" id="soc-sim"><div class="container">
     <div class="soc-wrap reveal">
       <div class="soc-head">
-        <div><h3>Live SOC Simulation</h3><p>3D network in motion. Threats come only from offensive tools (Nmap, Burp Suite, Kali Linux, Metasploit) and get blocked at the firewall before they reach the SOC core. Defensive tools scan, detect, and log, while legitimate users pass through.</p></div>
+        <div><h3>Live SOC Simulation</h3><p>3D network in motion, with each tool doing only its own job. Attacking tools (Burp Suite, Kali Linux, Metasploit) send threats. Scanning tools (Nmap, Wireshark) scan. Detection tools (Splunk, Sentinel, ELK Stack, Defender XDR) detect. Reporting tools (Splunk, Sentinel, ELK Stack) report incidents. Threats are blocked at the firewall, mapped to MITRE ATT&amp;CK, and tracked through the Cyber Kill Chain in order: Reconnaissance, Weaponization, Delivery, Exploitation, Installation, Command &amp; Control, Actions on Objectives.</p></div>
         <span class="soc-live">LIVE DETECTION</span>
       </div>
       <canvas id="soc-canvas" class="soc-canvas" aria-label="3D cybersecurity animation showing malicious packets being detected and blocked"></canvas>
@@ -523,8 +523,11 @@ body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),tra
     var r=Math.min(W,H)*0.36;
     return {x:Math.cos(a)*r, y:Math.sin(a*2)*28, z:Math.sin(a)*r, tool:tools[i]};
   }
-  var offensive=[2,3,4,9];
-  var defensive=[0,1,6,7,8,10,11];
+  var offensive=[2,4,9];
+  var scanning=[3,1];
+  var detection=[0,6,7,8];
+  var reporting=[0,6,8];
+  var defensive=[0,5,6,7,8,10,11];
   function spawn(){
     if(packets.length>26) return;
     var malicious=Math.random()<0.45;
@@ -609,7 +612,7 @@ body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),tra
       ctx.fillText(pk.malicious?'\uD83D\uDC80':'\uD83D\uDC64', x, y+6);
       if(pk.t>=0.6 && !pk.checked){
         pk.checked=true; scanned++;
-        if(pk.malicious){blocked++; flashes.push({x:fx,y:fy,text:'BLOCKED',t:0}); pulses.push({node:7, r:6, color:'rgba(255,59,59,0.6)'});}
+        if(pk.malicious){blocked++; flashes.push({x:fx,y:fy,text:'BLOCKED',t:0}); pulses.push({node:0, r:6, color:'rgba(0,255,136,0.7)'}); pulses.push({node:6, r:6, color:'rgba(0,255,136,0.7)'}); pulses.push({node:7, r:6, color:'rgba(255,59,59,0.6)'});}
         else {allowed++;}
         if(scannedEl) scannedEl.textContent=scanned;
         if(blockedEl) blockedEl.textContent=blocked;
@@ -624,7 +627,7 @@ body{background:radial-gradient(1200px 600px at 80% -10%,rgba(255,45,45,.16),tra
       ctx.font='700 13px "JetBrains Mono",monospace'; ctx.fillText(f.text, f.x, f.y-14-f.t*22);
     });
     flashes=flashes.filter(function(f){return f.t<1;});
-    if(Math.random()<0.06) pulses.push({node:Math.floor(Math.random()*tools.length), r:6, color:'rgba(255,59,59,0.5)'});
+    if(Math.random()<0.06) pulses.push({node:scanning[Math.floor(Math.random()*scanning.length)], r:6, color:'rgba(94,234,212,0.6)'});
     if(Math.random()<0.04) pulses.push({node:6, r:6, color:'rgba(0,255,136,0.5)'});
     drawPulses(nodes, core);
     if(Math.random()<0.08) spawn();
